@@ -13,8 +13,6 @@ Starting from the community SOTA baseline (thwu1), we introduce four techniques:
 |-----------|-------------|--------|
 | **AWQ (Activation-Aware Weight Quantization)** | Scale weight columns by activation importance (alpha=0.5) before quantization. Folds compensation into preceding LayerNorm. Reduces quantization error on high-activation channels. | Quant gap 0.027 → 0.010 bpb |
 | **Cyclic Muon Momentum** | Triangle wave between 0.85–0.95 with period=50 steps, replacing fixed 0.99 after warmup. Prevents optimizer from settling into sharp minima. | −0.0045 bpb on 1×H100 |
-| **ReLU² Activation** | Squared ReLU in MLP layers instead of GELU. Sparser activations, better gradient flow for small models. | −0.005 bpb |
-| **11L Shared (10 unique)** | 11 virtual layers using 10 physical weight sets. Last layer reuses block 9. Free depth at zero parameter cost. | −0.003 bpb |
 
 ## Results (8×H100)
 
