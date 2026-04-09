@@ -1,6 +1,6 @@
 {
   "author": "Sidhant Thole",
-  "github_id": "sidhantthole",
+  "github_id": "SPThole",
   "name": "Pos-Conditional BigramHash + Trigram (exp101)",
   "blurb": "Position-conditional bigram hash splits the 4095 usable buckets into ws-current [0,2047) and non-ws-current [2047,4094) halves, so word-start and within-word (prev,curr) pairs never share a bucket. Combined with (t-2,t-1,t) trigram lookup reusing the same 4096×64 table at zero extra params. TTT optimizer reverted from AdamW+flat to SGD+cosine (the parent model's AdamW path was never validated end-to-end — its 1.1169 number came from a standalone SGD re-run). FOMAML meta-TTT every=4 inherited from parent architecture (11L XSA-all, BigramHash4096×64, VE7-10). 1×H100, wall-clock cap 4800s. Ablation (see exp105a) shows meta-TTT contributes only +0.00036 bpb of the final score.",
   "date": "2026-04-09",
