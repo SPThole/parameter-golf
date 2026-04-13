@@ -1,5 +1,19 @@
 # Structured Experiment Summary
 
+This is kind of a summary of (maybe not all, lol) the experimentation I did — lots of learning. Thanks to OpenAI for the $525 + a few hundred dollars of my own credits! I’d love to try more ideas I had but couldn’t due to a shortage of credits.
+
+In this journey, I tried not to get bogged down by leaderboard approaches as much as possible. In a few places, though, when I got stuck, I did take help from the community. My general approach was: train a model → analyze it → try to solve the issues observed in the analysis. This ended up costing me many experiments and dollars.
+
+GIT REPO TO FIND ALL EXPERIMENTS:
+https://github.com/SPThole/parameter-golf-experimentations
+
+I have also made a cool mind map of all the experimentation — basically the path of what I did and why. I’ve also attached lineages that are relevant from community discussions and leaderboard files.
+
+I am planning to build on this:
+https://github.com/SPThole/bpb_wtf or visit: https://bpb-wtf.vercel.app/
+
+I’m also building a broader direction around this (mind map + experiments). If this resonates with anyone or you’d like to collaborate, feel free to reach out — I’d love to explore this further together.
+
 > **Competition**: OpenAI Parameter Golf
 > **Objective**: Minimize validation loss (bits-per-byte, bpb) under a 16MB artifact constraint within 10-minute training on 8×H100
 > **Total experiments**: 119+
