@@ -1,0 +1,59 @@
+{
+  "author": "Sidhant Thole",
+  "github_id": "sidhantthole",
+  "name": "GL Attention (Gemma-4 Style) on Parallel Residuals",
+  "blurb": "Adds Gemma-4-style alternating global/local attention (glg pattern, window=256) to the PR #1523 parallel residuals base. Global layers do full causal attention, local layers use sliding window — saving ~30% FLOPs on local layers with zero quality loss. Run on 1xH100 for 80 minutes (equivalent to 8x10min budget). Pre-quant post-EMA: 1.08279 BPB. Matches 8xH100 baseline quality (1.0832 BPB).",
+  "date": "2026-04-11",
+  "track": "10min_16mb",
+  "hardware": "1xH100 80GB HBM3 (80min = 8x10min equivalent)",
+  "hardware_equivalent": "8xH100 80GB SXM @ 10min",
+  "wallclock_seconds": 4800,
+  "wallclock_justification": "1 GPU x 80min = 8 GPUs x 10min. grad_accum_steps=8 compensates for single GPU, identical effective batch size (786432 tokens).",
+  "baseline_pr": 1523,
+  "base_experiment": "2026-04-11_newSota (Parallel Residuals)",
+  "innovation": "Gemma-4-style alternating global/local attention (GL_ATT_MODE=glg, GL_ATT_STRIDE=1, GL_ATT_WINDOW_SIZE=256)",
+  "evaluation": "partial (GPTQ log truncated; pre-quant post-EMA available)",
+  "seed_results": {
+    "1337": {
+      "pre_ema_val_loss": 2.7983,
+      "pre_ema_val_bpb": 1.0833,
+      "post_ema_val_loss": 2.7970,
+      "post_ema_val_bpb": 1.0828,
+      "steps": 4867,
+      "step_avg_ms": 974,
+      "tok_per_sec_pre_loop": 1023000,
+      "tok_per_sec_post_loop": 818000,
+      "peak_memory_mib": 39827,
+      "training_time_s": 4741,
+      "gptq_reserve_s": 60,
+      "log_file": "2026-04-11_newSota_copy_gl_att_1xH100_seed1337.txt"
+    }
+  },
+  "reference_baseline": {
+    "name": "older_parallel_residul_arch_8XH100_seed42",
+    "hardware": "8xH100 80GB SXM",
+    "val_bpb_pre_quant": 1.0832,
+    "val_bpb_quantized": 1.0940,
+    "val_bpb_sliding_window": 1.0769,
+    "val_bpb_ttt": 1.0754,
+    "steps": 4736,
+    "log_file": "older_parallel_residul_arch_8XH100_seed42.log"
+  },
+  "architecture": {
+    "num_layers": 11,
+    "model_dim": 512,
+    "num_heads": 8,
+    "num_kv_heads": 4,
+    "mlp_mult": 4.0,
+    "params": 35944602,
+    "parallel_residual_start": 8,
+    "parallel_final_lane": "mlp",
+    "layer_looping": "layers 3-5, 2 loops, enabled at 35%",
+    "xsa_last_n": 11,
+    "gl_att_enabled": true,
+    "gl_att_mode": "glg",
+    "gl_att_stride": 1,
+    "gl_att_window_size": 256
+  },
+  "technique_summary": "Gemma-4-style GL attention + parallel residual routing + GPT-J-style lane update + layer looping + XSA + CUTLASS EVT fusion + GPTQ int6 + legal TTT"
+}
